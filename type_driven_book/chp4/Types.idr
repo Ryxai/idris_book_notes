@@ -58,3 +58,32 @@ data Infinite = Forever Infinite
 safeDivide : Double -> Double -> Maybe Double
 safeDivide x y = if y == 0 then Nothing
                            else Just (x / y)
+
+data Either a b = Left a | Right b
+
+data Tree elem = Empty
+               | Node (Tree elem) elem (Tree elem)
+%name Tree tree, tree1
+
+maxMaybe : Ord a => Maybe a -> Maybe a -> Maybe a
+maxMaybe Nothing Nothing = Nothing
+maxMaybe Nothing (Just x) = Just x
+maxMaybe (Just x) Nothing = Just x
+maxMaybe (Just x) (Just y) = Just (max x y)
+
+biggestTriangle : Picture -> Maybe Double
+biggestTriangle (Primitive triangle@(Triangle x y)) = Just (area triangle)
+biggestTriangle (Primitive (Rectangle x y)) = Nothing
+biggestTriangle (Primitive (Circle x)) = Nothing
+biggestTriangle (Combine x y) = maxMaybe (biggestTriangle x) (biggestTriangle y)
+biggestTriangle (Rotate x y) = biggestTriangle y
+biggestTriangle (Translate x y z) = biggestTriangle z
+
+testPic1 : Picture
+testPic1 = Combine (Primitive (Triangle 2 3))
+                   (Primitive (Triangle 2 4))
+
+testPic2 : Picture
+testPic2 = Combine (Primitive (Rectangle 1 3))
+                   (Primitive (Circle 4))
+
