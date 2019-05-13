@@ -21,7 +21,7 @@ allSameS Z Z Z (ThreeSame Z) = ThreeSame (S Z)
 allSameS (S k) (S k) (S k) (ThreeSame (S k)) = ThreeSame (S (S k))
 ```
 The type means that if all of the values *x, y, z* and *ThreeEq* are the
-same then return the successor value of them. 
+same then return the successor value of them.
 5. The definition of *myPlusCommutes* follows:
 ```idris
 myPlusCommutes : (n : Nat) -> (m : Nat) -> n + m = m + n
@@ -39,7 +39,7 @@ myReverse xs = reverse' [] xs
 ```
 7. The definition of *headUnequal* and *tailUnequal* follows:
 ```idris
-headUnequal : DecEq a => {xs : Vect n a} -> {ys : Vect n a} -> 
+headUnequal : DecEq a => {xs : Vect n a} -> {ys : Vect n a} ->
     (contra : (x = y) -> Void) -> ((x::xs) = (y::ys)) -> Void
 headUnequal contra Refl = contra Refl
 
@@ -55,5 +55,5 @@ DecEq a => DecEq (Vect n a) where
                                  (Yes Refl) => (case decEq xs ys of
                                                      (Yes Refl) => Yes Refl
                                                      (No contra) => No (tailUnequal contra))
-                                 (No contra) => No (headUnequal contra) 
+                                 (No contra) => No (headUnequal contra)
 ```
